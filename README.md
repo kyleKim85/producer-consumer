@@ -29,7 +29,7 @@
       
 ## 주요 고려사항
 * Producer와 Consumer 사이의 데이터 교환은 어떻게 할 것인가?
-  * Thread 사이에서 작업을 조율하는 용도로 blocking queue가 존재.
+  * Thread 사이에서 작업을 조율하는 용도로 blocking queue가 존재한다.
   * java의 BlockingQueue 종류
      * **ArrayBlockingQueue**
          * Array로 구현된 Queue
@@ -38,22 +38,20 @@
          * Linked list로 구현된 Queue
          * 유동적으로 queue의 크기를 가진다.
      * PriorityBlockingQueue
-         * 자동으로 정렬을 수행하는 Queue로 Consumer의 **순차적 처리 요구사항에 위반**되므로 사용 불가.
+         * 자동으로 정렬을 수행하는 Queue로 Consumer의 **순차적 처리 요구사항에 위반**되므로 사용 불가하다.
      * SynchronousQueue
          * insert 작업과 remove 작업이 반드시 동시에 일어나는 Queue
          * Producer와 Consumer의 처리 속도가 동일하지 않을 수 있으므로 적합하지 않다.
    * ArrayBlockingQueue vs LinkedBlockingQueue
-	   * 5회 테스트 후 평균값 비교
-	   * 비교 결과 성능에 큰 차이가 없고, Broker 특성상 사이즈가 유동적이므로 LinkedBlockingQueue가 유리하다고 판단
+	   * 비교 결과 성능에 큰 차이가 없고, Broker 특성상 사이즈가 유동적이므로 LinkedBlockingQueue가 유리하다고 판단된다.
+	   * 5회 테스트 후 평균값 비교 	   
 	   ![screenshot](./screenshot/ArrayVsLinked.png) 
-
 * Producer에서 N개의 파티션으로 나눠서 Consumer에 어떻게 전달할 것인가?
-  * Distributor를 중간에 놓고, Producer에서 생산된 데이터를 Consumer로 분배하는 역할을 수행하게 한다.
-
+  * Distributor를 중간에 놓고, Producer에서 생산된 데이터를 Consumer로 분배하는 역할을 수행하게 한다. 
 * 프로그램 종료시 사용된 리소스를 어떻게 정리할 것인가?
-  * Producer에서 모든 단어를 전달 후 마지막으로 종료 시그널을 전송
-  * 종료 시그널을 받은 Distributor는 등록된 모든 Consumer에 종료 시그널을 전송하고 종료
-  * 종료 시그널을 받은 Consumer는 종료
+  * Producer에서 모든 단어를 전달 후 마지막으로 종료 시그널을 전송한다.
+  * 종료 시그널을 받은 Distributor는 등록된 모든 Consumer에 종료 시그널을 전송하고 종료한다.
+  * 종료 시그널을 받은 Consumer는 종료한다.
   * 종료 시그널은 단어로 올 가능성이 없는 문자로 선정 : !q
 
 ## 클래스 설계
