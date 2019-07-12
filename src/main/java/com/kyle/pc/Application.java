@@ -81,9 +81,9 @@ public class Application {
 		if (prop == null)
 			return false;
 		if (isInvalidProducerQueueSize(prop.getProperty(PROPS_PRODUCER_QUEUE_SIZE_NAME)))
-			;
+			return false;
 		if (isInvalidConsumerQueueSize(prop.getProperty(PROPS_CONSUMER_QUEUE_SIZE_NAME)))
-			;
+			return false;
 
 		setConfigurationByProperties(prop);
 
