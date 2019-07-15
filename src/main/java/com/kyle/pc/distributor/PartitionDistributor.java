@@ -31,6 +31,7 @@ public class PartitionDistributor extends Distributor{
 			consumerQueuesIndex++;
 		}
 		
+		consumerQueuesIndex = 0;
 		for(int i = 'A' ; i <= 'Z'; i++) {
 			partitionMap.put((char)i, consumerQueuesIndex % consumerBrokerSize());
 			consumerQueuesIndex++;
