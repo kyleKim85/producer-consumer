@@ -20,7 +20,10 @@ public abstract class Consumer implements Runnable{
 		try {
 			while(true) {
 				String data = receiveData();
-				if(MessageUtils.isQuitMessage(data)) break;
+				if(MessageUtils.isQuitMessage(data)) {
+					onDestroy();
+					break;
+				}
 				consume(data);
 			}
 		} catch (InterruptedException e) {
@@ -34,5 +37,7 @@ public abstract class Consumer implements Runnable{
 	}
 	
 	protected abstract void consume(String data);
+	
+	protected abstract void onDestroy();
 
 }
